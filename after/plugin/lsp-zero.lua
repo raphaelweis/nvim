@@ -26,25 +26,7 @@ lsp.on_attach(function(client, bufnr)
 end)
 
 lsp.ensure_installed({
-  "bashls",
-  "clangd",
-  "csharp_ls",
-  "cmake",
-  "cssls",
-  "diagnosticls",
-  "gopls",
-  "gradle_ls",
-  "html",
-  "jsonls",
-  "jdtls",
-  "tsserver",
-  "ltex",
-  "lua_ls",
-  "marksman",
-  "phpactor",
-  "pyright",
-  "rust_analyzer",
-  "sqlls",
+  "lua_ls"
 })
 
 -- (Optional) Configure lua language server for neovim
