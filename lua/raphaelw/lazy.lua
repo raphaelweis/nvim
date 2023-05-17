@@ -18,9 +18,6 @@ local plugins = {
 		"akinsho/bufferline.nvim", -- bufferline with tabs
 	},
 	{
-		"akinsho/toggleterm.nvim", -- pop-up terminal inside neovim
-	},
-	{
 		"andrewferrier/wrapping.nvim", -- for better wrapping in natural text documents
 	},
 	{
@@ -69,9 +66,6 @@ local plugins = {
     priority = 1000,
 	},
 	{
-		"mfussenegger/nvim-dap", -- nvim DAP - debug adapter protocol
-	},
-	{
 		"numToStr/Comment.nvim", -- automatically comment lines or blocks of code
 	},
 	{
@@ -104,9 +98,6 @@ local plugins = {
 	{
 		"rafamadriz/friendly-snippets", -- snippets collections for all filetypes
 	},
-	{
-		"rcarriga/nvim-notify", -- notifications
-	},
   {
 	  "rose-pine/neovim"
   },
@@ -114,12 +105,6 @@ local plugins = {
 		"sam4llis/nvim-tundra", -- colorscheme plugin
     priority = 1000,
 	},
-	{
-		"Shatur/neovim-session-manager", -- manage sessions in vscode fashion
-	},
-  {
-    "Tastyep/structlog.nvim", -- more structured login messages
-  },
 	{
 		"tpope/vim-fugitive", -- full git integration
 	},
@@ -154,9 +139,6 @@ local plugins = {
 	{
 		"ziontee113/icon-picker.nvim", -- icon and special character picker
 	},
-
-	-- deprecated plugins list (the configuration for those still exists, but they are not in use)
-	-- "ahmedkhalf/project.nvim" | project management plugin
 }
 
 -- options table
