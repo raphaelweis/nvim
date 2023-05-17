@@ -20,10 +20,6 @@ local plugins = {
 	{
 		"andrewferrier/wrapping.nvim", -- for better wrapping in natural text documents
 	},
-	{
-		"catppuccin/nvim", -- colorscheme plugin
-    priority = 1000,
-	},
   {
     "christoomey/vim-tmux-navigator" -- vim tmux navigation with CTRL + nav
   },
@@ -36,10 +32,6 @@ local plugins = {
 	},
 	{
 		"folke/neodev.nvim", -- completion and documentation for lua neovim config and API's
-	},
-	{
-		"folke/tokyonight.nvim", -- colorscheme plugin
-    priority = 1000,
 	},
 	{
 		"folke/which-key.nvim", -- pop-up menu that shows possible keybinds after pressing a key
@@ -60,10 +52,6 @@ local plugins = {
 	},
 	{
 		"lukas-reineke/indent-blankline.nvim", -- indent guides (like in vs code)
-	},
-	{
-		"lunarvim/Onedarker.nvim", -- colorscheme plugin
-    priority = 1000,
 	},
 	{
 		"numToStr/Comment.nvim", -- automatically comment lines or blocks of code
@@ -101,10 +89,6 @@ local plugins = {
   {
 	  "rose-pine/neovim"
   },
-	{
-		"sam4llis/nvim-tundra", -- colorscheme plugin
-    priority = 1000,
-	},
 	{
 		"tpope/vim-fugitive", -- full git integration
 	},
