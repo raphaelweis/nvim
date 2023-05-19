@@ -15,6 +15,10 @@ showHelp() {
 pickHost() {
   if [ $host = "default" ]; then
     mkdir -p $PROGRAM_TARGET
+    if [ ! -d "$SCRIPT_PATH/file" ]; then
+      echo "Error: The files for this configuration are missing"
+      exit 1
+    fi
     stow -d $SCRIPT_PATH/default $PROGRAM_NAME -t $PROGRAM_TARGET
 
     if [ $? -eq 0 ]; then
@@ -23,6 +27,44 @@ pickHost() {
       echo "    - The target is $PROGRAM_TARGET"
     else
       echo "Error: Failed to create symbolic links in configuration $host"
+      exit 1
+    fi
+
+    exit 0
+  fi
+  if [ $host = "file" ]; then
+    mkdir -p $STRIPPED_TARGET
+    if [ ! -d "$SCRIPT_PATH/file" ]; then
+      echo "Error: The files for this configuration are missing"
+      exit 1
+    fi
+    stow -d $SCRIPT_PATH/file $PROGRAM_NAME -t $STRIPPED_TARGET
+
+    if [ $? -eq 0 ]; then
+      echo "Successfully created symbolic links for the $PROGRAM_NAME package"
+      echo "    - The configuration is $host"
+      echo "    - The target is $STRIPPED_TARGET"
+    else
+      echo "Error: Failed to create symbolic links in configuration $host"
+      exit 1
+    fi
+
+    exit 0
+  fi
+  if [ $host = "sudo" ]; then
+    sudo mkdir -p $STRIPPED_TARGET
+    if [ ! -d "$SCRIPT_PATH/sudo" ]; then
+      echo "Error: The files for this configuration are missing"
+      exit 1
+    fi
+    sudo \cp -rf $SCRIPT_PATH/sudo/$PROGRAM_NAME/. $STRIPPED_TARGET
+
+    if [ $? -eq 0 ]; then
+      echo "Successfully copied files for the $PROGRAM_NAME package"
+      echo "    - The configuration is $host"
+      echo "    - The target is $PROGRAM_TARGET"
+    else
+      echo "Error: Failed to copy files in configuration $host"
       exit 1
     fi
 
@@ -89,7 +131,8 @@ host=""
 
 # resolve target by resolving the contents of the target.txt file
 TARGET_FILE_CONTENT=$(cat $SCRIPT_PATH/target.txt)
-PROGRAM_TARGET=$(eval "echo \"$TARGET_FILE_CONTENT\"")/$PROGRAM_NAME
+STRIPPED_TARGET=$(eval "echo \"$TARGET_FILE_CONTENT\"")
+PROGRAM_TARGET=$STRIPPED_TARGET/$PROGRAM_NAME
 
 # read the options
 while getopts ":h:c:t:d" option; do
