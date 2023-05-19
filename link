@@ -163,3 +163,4 @@ fi
 
 # show help if no options have been passed in
 showHelp
+exit 1;
