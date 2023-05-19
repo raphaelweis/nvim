@@ -27,7 +27,7 @@ local plugins = {
 		"elkowar/yuck.vim", -- syntax highlighting for custom lisp like language - see EWW Widgets on github
 	},
 	{
-		"ellisonleao/gruvbox.nvim", -- colorscheme plugin
+		"navarasu/onedark.nvim", -- colorscheme plugin
     priority = 1000,
 	},
 	{
