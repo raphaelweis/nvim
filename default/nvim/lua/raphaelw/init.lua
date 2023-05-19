@@ -4,3 +4,6 @@ require("raphaelw.options")
 
 -- plugins declaration
 require("raphaelw.lazy")
+
+-- colorscheme
+require("raphaelw.colorscheme")
