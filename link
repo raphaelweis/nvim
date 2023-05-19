@@ -62,7 +62,7 @@ pickHost() {
     if [ $? -eq 0 ]; then
       echo "Successfully copied files for the $PROGRAM_NAME package"
       echo "    - The configuration is $host"
-      echo "    - The target is $PROGRAM_TARGET"
+      echo "    - The target is $STRIPPED_TARGET"
     else
       echo "Error: Failed to copy files in configuration $host"
       exit 1
