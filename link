@@ -15,7 +15,7 @@ showHelp() {
 pickHost() {
   if [ $host = "default" ]; then
     mkdir -p $PROGRAM_TARGET
-    if [ ! -d "$SCRIPT_PATH/file" ]; then
+    if [ ! -d "$SCRIPT_PATH/default" ]; then
       echo "Error: The files for this configuration are missing"
       exit 1
     fi
