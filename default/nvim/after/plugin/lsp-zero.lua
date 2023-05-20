@@ -26,7 +26,8 @@ lsp.on_attach(function(client, bufnr)
 end)
 
 lsp.ensure_installed({
-  "lua_ls"
+  "lua_ls",
+  "bashls",
 })
 
 -- (Optional) Configure lua language server for neovim
