@@ -57,10 +57,6 @@ local plugins = {
 		"numToStr/Comment.nvim", -- automatically comment lines or blocks of code
 	},
 	{
-		"nvim-lualine/lualine.nvim", -- status line
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-	},
-	{
 		"nvim-neo-tree/neo-tree.nvim", -- file explorer
 		branch = "v2.x",
 		dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons", "MunifTanjim/nui.nvim" },
