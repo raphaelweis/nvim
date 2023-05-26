@@ -5,6 +5,8 @@ vim.opt.termguicolors = true -- enable 24-bit RGB color for the UI
 vim.opt.background = "dark" -- choose preferred option for the colorscheme (light/dark)
 vim.opt.signcolumn = "auto" -- draws a column on the left to display things like breakpoints (auto = only when necessary)
 vim.opt.showmode = false -- prevent neovim from displaying current mode since the status line already does it
+vim.opt.hlsearch = false -- disable highlighting after search
+vim.opt.guicursor = "" -- set cursor to default, which is the terminal's default
 
 -- text editing
 vim.opt.tabstop = 2 -- tabs = 2 spaces
