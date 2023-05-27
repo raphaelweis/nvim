@@ -14,32 +14,9 @@ vim.opt.rtp:prepend(lazypath)
 
 -- plugins table
 local plugins = {
-	{
-		"akinsho/bufferline.nvim", -- bufferline with tabs
-	},
-	{
-		"andrewferrier/wrapping.nvim", -- for better wrapping in natural text documents
-	},
   {
     "christoomey/vim-tmux-navigator" -- vim tmux navigation with CTRL + nav
   },
-	{
-		"elkowar/yuck.vim", -- syntax highlighting for custom lisp like language - see EWW Widgets on github
-	},
-	{
-		"navarasu/onedark.nvim", -- colorscheme plugin
-    priority = 1000,
-	},
-	{
-		"folke/neodev.nvim", -- completion and documentation for lua neovim config and API's
-	},
-	{
-		"folke/which-key.nvim", -- pop-up menu that shows possible keybinds after pressing a key
-	},
-	{
-		"goolord/alpha-nvim", -- neovim welcome screen
-		dependencies = "nvim-tree/nvim-web-devicons",
-	},
 	{
 		"iamcco/markdown-preview.nvim", -- to preview markdown documents
 		build = "cd app && npm install",
@@ -47,19 +24,12 @@ local plugins = {
 	{
 		"lervag/vimtex", -- for LaTeX documents
 	},
-	{
-		"lewis6991/gitsigns.nvim", -- git decoration on sidebar
-	},
-	{
-		"lukas-reineke/indent-blankline.nvim", -- indent guides (like in vs code)
-	},
+  {
+    "navarasu/onedark.nvim", -- color scheme
+    priority = 1000,
+  },
 	{
 		"numToStr/Comment.nvim", -- automatically comment lines or blocks of code
-	},
-	{
-		"nvim-neo-tree/neo-tree.nvim", -- file explorer
-		branch = "v2.x",
-		dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons", "MunifTanjim/nui.nvim" },
 	},
 	{
 		"nvim-telescope/telescope.nvim", -- fuzzy finder for neovim
@@ -76,15 +46,6 @@ local plugins = {
 		build = ":TSUpdate",
 		dependencies = { "windwp/nvim-ts-autotag", "JoosepAlviste/nvim-ts-context-commentstring" },
 	},
-	{
-		"Pocco81/true-zen.nvim", -- toggle between modes for zen coding
-	},
-	{
-		"rafamadriz/friendly-snippets", -- snippets collections for all filetypes
-	},
-  {
-	  "rose-pine/neovim"
-  },
 	{
 		"tpope/vim-fugitive", -- full git integration
 	},
@@ -110,14 +71,8 @@ local plugins = {
 			{ "rafamadriz/friendly-snippets" },
 		},
 	},
-  {
-    "waycrate/swhkd-vim", -- for syntax highlighting in swhkd hotkey daemon conf file
-  },
 	{
 		"windwp/nvim-autopairs", -- automatically insert closing brackets, parenthesis, quotes, etc
-	},
-	{
-		"ziontee113/icon-picker.nvim", -- icon and special character picker
 	},
 }
 
