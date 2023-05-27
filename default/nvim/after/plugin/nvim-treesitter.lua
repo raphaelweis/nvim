@@ -6,19 +6,15 @@ end
 
 treesitter_configs.setup({
 	ensure_installed = {
-		"c",
-		"lua",
-		"java",
-		"php",
-		"vim",
-		"html",
-		"css",
-		"javascript",
-		"json",
-		"markdown",
-		"markdown_inline",
-		"hocon",
-	}, -- ensure these treesitter parsers are installed
+        "java",
+        "c",
+        "javascript",
+        "php",
+        "typescript",
+        "lua",
+        "help"
+    }, -- ensure these treesitter parsers are installed
+    auto_install = true, -- make sure to have treesitter-cli to use this.
 	highlight = {
 		enable = true,
 		disable = { "latex" },
