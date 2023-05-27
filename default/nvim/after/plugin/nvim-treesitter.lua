@@ -12,7 +12,6 @@ treesitter_configs.setup({
         "php",
         "typescript",
         "lua",
-        "help"
     }, -- ensure these treesitter parsers are installed
     auto_install = true, -- make sure to have treesitter-cli to use this.
 	highlight = {
