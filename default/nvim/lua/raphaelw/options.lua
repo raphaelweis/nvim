@@ -9,12 +9,13 @@ vim.opt.hlsearch = false -- disable highlighting after search
 vim.opt.guicursor = "" -- set cursor to default, which is the terminal's default
 
 -- text editing
-vim.opt.tabstop = 2 -- tabs = 2 spaces
-vim.opt.shiftwidth = 2 -- indentation = 2 spaces
+vim.opt.tabstop = 4 -- tabs = 2 spaces
+vim.opt.shiftwidth = 4 -- indentation = 2 spaces
 vim.opt.expandtab = true -- convert tabs to spaces
 vim.opt.autoindent = true -- copy indent from current line when going to a new line
-vim.opt.wrap = false -- lines that are too long will not get cut to show on the line under them
+vim.opt.wrap = true -- automatic line wrapping
 vim.opt.iskeyword:append("-") -- include "-" as a word character, meaning string-string is a whole word.
+vim.opt.clipboard:append("unnamedplus") -- use system clipboard as default
 vim.cmd([[autocmd BufEnter * set formatoptions-=cro]]) -- prevent neovim from automatically commenting new lines
 
 -- windows and buffers
@@ -27,6 +28,3 @@ vim.opt.spellfile = os.getenv("VIMCONFDIR") .. "/spell/dictionary.add" -- custom
 
 -- save all if SIGHUP signal gets sent
 vim.opt.autowriteall = true
-
--- enable mouse movement
-vim.opt.mousemoveevent = true -- for bufferline - might cause problems
