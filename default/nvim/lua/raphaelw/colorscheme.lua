@@ -1,5 +1,5 @@
 local function setColorScheme()
-  vim.o.background = "light"
+  vim.o.background = "dark"
   vim.cmd([[colorscheme onedark]])
 end
 
