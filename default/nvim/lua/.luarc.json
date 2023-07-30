@@ -1,9 +1,0 @@
-{
-    "diagnostics.globals": [
-        "vim",
-        "colorschemeConfig",
-        "cmpKeymaps",
-        "isMarkdown"
-    ],
-    "workspace.checkThirdParty": false
-}
