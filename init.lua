@@ -1,3 +1,7 @@
+-- Disable netrw (for nvim-tree)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 vim.g.mapleader = ' '
@@ -26,6 +30,9 @@ require('lazy').setup({
 	'tpope/vim-fugitive',
 	'tpope/vim-rhubarb',
 
+	-- Seamless navigation between tmux and neovim
+	'christoomey/vim-tmux-navigator',
+
 	-- Autoclosing of brackets and others
 	{
 		'windwp/nvim-autopairs',
@@ -33,8 +40,14 @@ require('lazy').setup({
 		opts = {},
 	},
 
-	-- Seamless navigation between tmux and neovim
-	'christoomey/vim-tmux-navigator',
+	-- File explorer
+	{
+		'nvim-tree/nvim-tree.lua',
+		dependencies = {
+			'nvim-tree/nvim-web-devicons'
+		},
+		opts = {}
+	},
 
 	-- LSP Configuration & Plugins
 	{
@@ -217,15 +230,18 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Keymaps for tabs and window management
-vim.keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
-vim.keymap.set("n", "<leader>sh", "<C-w>s") -- split window horizontally
-vim.keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width & height
-vim.keymap.set("n", "<leader>sx", ":close<CR>") -- close current split window
+vim.keymap.set("n", "<leader>sv", "<C-w>v")            -- split window vertically
+vim.keymap.set("n", "<leader>sh", "<C-w>s")            -- split window horizontally
+vim.keymap.set("n", "<leader>se", "<C-w>=")            -- make split windows equal width & height
+vim.keymap.set("n", "<leader>sx", "<CMD>close<CR>")    -- close current split window
 
-vim.keymap.set("n", "<leader>to", ":tabnew<CR>") -- open new tab
-vim.keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close current tab
-vim.keymap.set("n", "<leader>tn", ":tabn<CR>") --  go to next tab
-vim.keymap.set("n", "<leader>tp", ":tabp<CR>") --  go to previous tab
+vim.keymap.set("n", "<leader>to", "<CMD>tabnew<CR>")   -- open new tab
+vim.keymap.set("n", "<leader>tx", "<CMD>tabclose<CR>") -- close current tab
+vim.keymap.set("n", "<leader>tn", "<CMD>tabn<CR>")     --  go to next tab
+vim.keymap.set("n", "<leader>tp", "<CMD>tabp<CR>")     --  go to previous tab
+
+-- NvimTree keymaps
+vim.keymap.set("n", "<leader>e", "<CMD>NvimTreeToggle<CR>") -- toggle nvim tree
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -339,7 +355,7 @@ require('nvim-treesitter.configs').setup {
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+vim.keymap.set('n', '<leader>E', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 -- [[ Configure LSP ]]
