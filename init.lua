@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 -- Disable netrw (for nvim-tree)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -78,6 +79,22 @@ require('lazy').setup({
 		},
 	},
 
+	-- Debugger
+	{
+		'mfussenegger/nvim-dap',
+		dependencies = {
+			-- UI for the debug engine
+			'rcarriga/nvim-dap-ui',
+
+			-- Package manager for debuggers
+			'williamboman/mason.nvim',
+			'jay-babu/mason-nvim-dap.nvim',
+
+			-- Specific debugger configurations go here
+			'leoluz/nvim-dap-go',
+		},
+	},
+
 	-- Useful plugin to show you pending keybinds.
 	{ 'folke/which-key.nvim',          opts = {} },
 
@@ -118,8 +135,7 @@ require('lazy').setup({
 		-- See `:help lualine.txt`
 		opts = {
 			options = {
-				icons_enabled = false,
-				theme = 'onedark',
+				theme = 'gruvbox',
 				component_separators = '|',
 				section_separators = '',
 			},
@@ -156,19 +172,8 @@ require('lazy').setup({
 		build = ':TSUpdate',
 	},
 
-	-- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
-	--       These are some example plugins that I've included in the kickstart repository.
-	--       Uncomment any of the lines below to enable them.
 	require 'kickstart.plugins.autoformat',
 	require 'kickstart.plugins.debug',
-
-	-- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-	--    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
-	--    up-to-date with whatever is in the kickstart repo.
-	--    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-	--
-	--    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-	-- { import = 'custom.plugins' },
 }, {})
 
 -- [[ Setting options ]]
@@ -274,9 +279,7 @@ pcall(require('telescope').load_extension, 'fzf')
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
 vim.keymap.set('n', '<leader>/', function()
-	-- You can pass additional configuration to telescope to change theme, layout, etc.
 	require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-		winblend = 10,
 		previewer = false,
 	})
 end, { desc = '[/] Fuzzily search in current buffer' })
@@ -446,7 +449,6 @@ mason_lspconfig.setup_handlers {
 }
 
 -- [[ Configure nvim-cmp ]]
--- See `:help cmp`
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
@@ -457,6 +459,10 @@ cmp.setup {
 		expand = function(args)
 			luasnip.lsp_expand(args.body)
 		end,
+	},
+	window = {
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
 	},
 	mapping = cmp.mapping.preset.insert {
 		['<Alt-j>'] = cmp.mapping.select_next_item(),
@@ -492,3 +498,52 @@ cmp.setup {
 		{ name = 'luasnip' },
 	},
 }
+
+-- [[ Configure nvim-dap ]]
+local dap = require 'dap'
+local dapui = require 'dapui'
+
+require('mason-nvim-dap').setup({
+	automatic_setup = true,
+	handlers = {},
+	ensure_installed = {
+		'delve',
+	},
+})
+
+vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
+vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
+vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
+vim.keymap.set('n', '<F3>', dap.step_out, { desc = 'Debug: Step Out' })
+vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
+vim.keymap.set('n', '<leader>B', function()
+	dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+end, { desc = 'Debug: Set Breakpoint' })
+
+-- Dap UI setup
+dapui.setup {
+	icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
+	controls = {
+		icons = {
+			pause = '⏸',
+			play = '▶',
+			step_into = '⏎',
+			step_over = '⏭',
+			step_out = '⏮',
+			step_back = 'b',
+			run_last = '▶▶',
+			terminate = '⏹',
+			disconnect = '⏏',
+		},
+	},
+}
+
+-- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
+vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
+
+dap.listeners.after.event_initialized['dapui_config'] = dapui.open
+dap.listeners.before.event_terminated['dapui_config'] = dapui.close
+dap.listeners.before.event_exited['dapui_config'] = dapui.close
+
+-- Install golang specific config
+require('dap-go').setup()
