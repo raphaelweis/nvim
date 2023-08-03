@@ -172,6 +172,28 @@ require('lazy').setup({
 		build = ':TSUpdate',
 	},
 
+	-- UI improvements/replacements
+	{
+		'stevearc/dressing.nvim',
+		opts = {
+			input = {
+				win_options = {
+					winblend = 0
+				}
+			},
+			nui = {
+				win_options = {
+					winblend = 0
+				}
+			},
+			builtin = {
+				win_options = {
+					winblend = 0
+				}
+			}
+		},
+	},
+
 	require 'kickstart.plugins.autoformat',
 	require 'kickstart.plugins.debug',
 }, {})
