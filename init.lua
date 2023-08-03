@@ -41,6 +41,12 @@ require('lazy').setup({
 		opts = {},
 	},
 
+	-- Clean window maximization
+	{
+		'declancm/maximize.nvim',
+		opts = {},
+	},
+
 	-- File explorer
 	{
 		'nvim-tree/nvim-tree.lua',
@@ -257,15 +263,16 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Keymaps for tabs and window management
-vim.keymap.set("n", "<leader>sv", "<C-w>v")            -- split window vertically
-vim.keymap.set("n", "<leader>sh", "<C-w>s")            -- split window horizontally
-vim.keymap.set("n", "<leader>se", "<C-w>=")            -- make split windows equal width & height
-vim.keymap.set("n", "<leader>sx", "<CMD>close<CR>")    -- close current split window
+vim.keymap.set("n", "<leader>sv", "<C-w>v")                                -- split window vertically
+vim.keymap.set("n", "<leader>sh", "<C-w>s")                                -- split window horizontally
+vim.keymap.set("n", "<leader>se", "<C-w>=")                                -- make split windows equal width & height
+vim.keymap.set("n", "<leader>sm", "<CMD>lua require('maximize').toggle()<CR>") -- maximize current window
+vim.keymap.set("n", "<leader>sx", "<CMD>close<CR>")                        -- close current split window
 
-vim.keymap.set("n", "<leader>to", "<CMD>tabnew<CR>")   -- open new tab
-vim.keymap.set("n", "<leader>tx", "<CMD>tabclose<CR>") -- close current tab
-vim.keymap.set("n", "<leader>tn", "<CMD>tabn<CR>")     --  go to next tab
-vim.keymap.set("n", "<leader>tp", "<CMD>tabp<CR>")     --  go to previous tab
+vim.keymap.set("n", "<leader>to", "<CMD>tabnew<CR>")                       -- open new tab
+vim.keymap.set("n", "<leader>tx", "<CMD>tabclose<CR>")                     -- close current tab
+vim.keymap.set("n", "<leader>tn", "<CMD>tabn<CR>")                         --  go to next tab
+vim.keymap.set("n", "<leader>tp", "<CMD>tabp<CR>")                         --  go to previous tab
 
 -- NvimTree keymaps
 vim.keymap.set("n", "<leader>e", "<CMD>NvimTreeToggle<CR>") -- toggle nvim tree
