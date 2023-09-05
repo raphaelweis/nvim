@@ -1,34 +1,3 @@
-local on_attach = function(_, bufnr)
-	local nmap = function(keys, func, desc)
-		if desc then
-			desc = 'LSP: ' .. desc
-		end
-
-		vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-	end
-
-	nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-	nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-	nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-	nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-	nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-	nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-	nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-	nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-	nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-	nmap('<leader>k', vim.lsp.buf.signature_help, 'Signature Documentation')
-	nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-	nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-	nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-	nmap('<leader>wl', function()
-		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-	end, '[W]orkspace [L]ist Folders')
-
-	nmap('<leader>fm', function()
-		vim.lsp.buf.format()
-	end, '[F]or[m]at current buffer with LSP')
-end
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
@@ -36,9 +5,10 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
-luasnip.config.setup {}
+luasnip.config.setup {
+}
 
-cmp.setup {
+cmp.setup({
 	snippet = {
 		expand = function(args)
 			luasnip.lsp_expand(args.body)
@@ -81,4 +51,78 @@ cmp.setup {
 		{ name = 'nvim_lsp' },
 		{ name = 'luasnip' },
 	},
-}
+})
+
+-- Language servers configuration
+-- import lspconfig plugin
+local lspconfig = require("lspconfig")
+local opts = { noremap = true, silent = true }
+local on_attach = function(client, bufnr)
+	opts.buffer = bufnr
+
+	-- set keybinds
+	opts.desc = "Show LSP references"
+	vim.keymap.set("n", "gR", "<CMD>Telescope lsp_references<CR>", opts)
+
+	opts.desc = "Format current file"
+	vim.keymap.set("n", "<leader>fm", vim.lsp.buf.format, opts)
+
+	opts.desc = "Go to declaration"
+	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+
+	opts.desc = "Show LSP definitions"
+	vim.keymap.set("n", "gd", "<CMD>Telescope lsp_definitions<CR>", opts)
+
+	opts.desc = "Show LSP implementations"
+	vim.keymap.set("n", "gi", "<CMD>Telescope lsp_implementations<CR>", opts)
+
+	opts.desc = "Show LSP type definitions"
+	vim.keymap.set("n", "gt", "<CMD>Telescope lsp_type_definitions<CR>", opts)
+
+	opts.desc = "See available code actions"
+	vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+
+	opts.desc = "Smart rename"
+	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+
+	opts.desc = "Show buffer diagnostics"
+	vim.keymap.set("n", "<leader>D", "<CMD>Telescope diagnostics bufnr=0<CR>", opts)
+
+	opts.desc = "Show line diagnostics"
+	vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+
+	opts.desc = "Go to previous diagnostic"
+	vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+
+	opts.desc = "Go to next diagnostic"
+	vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+
+	opts.desc = "Show documentation for what is under cursor"
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+end
+
+-- Configure language servers
+lspconfig["lua_ls"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	settings = { -- custom settings for lua
+		Lua = {
+			-- make the language server recognize "vim" global
+			diagnostics = {
+				globals = { "vim" },
+			},
+			workspace = {
+				-- make language server aware of runtime files
+				library = {
+					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+					[vim.fn.stdpath("config") .. "/lua"] = true,
+				},
+			},
+		},
+	},
+})
+
+lspconfig["gopls"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
