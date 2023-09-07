@@ -4,7 +4,7 @@ return {
 		'hrsh7th/nvim-cmp',
 		'L3MON4D3/LuaSnip',
 		'saadparwaiz1/cmp_luasnip',
-    	'hrsh7th/cmp-nvim-lsp',
+		'hrsh7th/cmp-nvim-lsp',
 		'rafamadriz/friendly-snippets',
 	},
 	config = function()
@@ -35,7 +35,6 @@ return {
 				['<C-f>'] = cmp.mapping.scroll_docs(4),
 				['<C-Space>'] = cmp.mapping.complete {},
 				['<CR>'] = cmp.mapping.confirm {
-					behavior = cmp.ConfirmBehavior.Replace,
 					select = true,
 				},
 				['<Tab>'] = cmp.mapping(function(fallback)
@@ -78,10 +77,10 @@ return {
 			vim.keymap.set("n", "<leader>fm", vim.lsp.buf.format, opts)
 
 			opts.desc = "Go to declaration"
-			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+			vim.keymap.set("n", "gd", vim.lsp.buf.declaration, opts)
 
 			opts.desc = "Show LSP definitions"
-			vim.keymap.set("n", "gd", "<CMD>Telescope lsp_definitions<CR>", opts)
+			vim.keymap.set("n", "gD", "<CMD>Telescope lsp_definitions<CR>", opts)
 
 			opts.desc = "Show LSP implementations"
 			vim.keymap.set("n", "gi", "<CMD>Telescope lsp_implementations<CR>", opts)
