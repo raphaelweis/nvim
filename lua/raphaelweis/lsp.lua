@@ -77,7 +77,7 @@ return {
 			vim.keymap.set("n", "<leader>fm", vim.lsp.buf.format, opts)
 
 			opts.desc = "Go to declaration"
-			vim.keymap.set("n", "gd", vim.lsp.buf.declaration, opts)
+			vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 
 			opts.desc = "Show LSP definitions"
 			vim.keymap.set("n", "gD", "<CMD>Telescope lsp_definitions<CR>", opts)
