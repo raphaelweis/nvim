@@ -17,7 +17,7 @@ vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 
 -- Set colored column at 80 characters
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = '80'
 
 -- Enable relative line numbers
 vim.o.relativenumber = true
@@ -115,9 +115,6 @@ require('lazy').setup({
 		opts = {},
 	},
 
-	-- LSP Configuration & Autocompletion
-	require("raphaelweis.lsp"),
-
 	-- Adds git releated signs to the gutter, as well as utilities for managing changes
 	{
 		'lewis6991/gitsigns.nvim',
@@ -137,39 +134,29 @@ require('lazy').setup({
 		'ellisonleao/gruvbox.nvim',
 		priority = 1000,
 		config = function()
-			vim.cmd.colorscheme 'gruvbox'
+			require('gruvbox').setup({
+				transparent_mode = true,
+				italic = {
+					strings = false,
+					comments = true,
+					operators = false,
+					folds = true,
+				},
+			})
+			vim.cmd.colorscheme('gruvbox')
 		end,
 	},
 
 	-- Show indent guides, even on blanklines
 	{
 		'lukas-reineke/indent-blankline.nvim',
-		opts = {
-			show_trailing_blankline_indent = false,
-		},
+		opts = { show_trailing_blankline_indent = false }
 	},
 
 	-- "gc" to comment visual regions/lines
-	{ 'numToStr/Comment.nvim',         opts = {} },
+	{ 'numToStr/Comment.nvim', opts = {} },
 
-	-- Fuzzy Finder (files, lsp, etc)
-	{ 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
-	{
-		'nvim-telescope/telescope-fzf-native.nvim',
-		build = 'make',
-		cond = function()
-			return vim.fn.executable 'make' == 1
-		end,
-	},
-
-	{
-		-- Highlight, edit, and navigate code
-		'nvim-treesitter/nvim-treesitter',
-		dependencies = {
-			'nvim-treesitter/nvim-treesitter-textobjects',
-		},
-		build = ':TSUpdate',
-	},
+	require("raphaelweis.telescope"),
+	require("raphaelweis.treesitter"),
+	require("raphaelweis.lsp"),
 }, {})
-
-require("raphaelweis")
