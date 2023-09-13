@@ -161,5 +161,6 @@ require('lazy').setup({
 	require("raphaelweis.harpoon"),
 	require("raphaelweis.telescope"),
 	require("raphaelweis.treesitter"),
+	require("raphaelweis.cmp"),
 	require("raphaelweis.lsp"),
 }, {})
