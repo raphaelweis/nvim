@@ -163,4 +163,5 @@ require('lazy').setup({
 	require("raphaelweis.treesitter"),
 	require("raphaelweis.cmp"),
 	require("raphaelweis.lsp"),
+	require("raphaelweis.dap")
 }, {})
