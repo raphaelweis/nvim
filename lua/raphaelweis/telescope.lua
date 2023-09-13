@@ -9,36 +9,27 @@ local function telescopeConfig()
 			},
 		},
 	}
+
+	-- Enable telescope fzf native, if installed
 	pcall(require('telescope').load_extension, 'fzf')
-end
 
-local function fuzBuffers()
-	require('telescope.builtin').buffers()
-end
-local function fuzSearch()
-	require('telescope.builtin')
-		.current_buffer_fuzzy_find(require('telescope.themes')
-			.get_dropdown({ previewer = false }))
-end
-local function fuzGitFiles()
-	require('telescope.builtin').git_files()
-end
-local function fuzFiles()
-	require('telescope.builtin').find_files()
-end
-local function fuzHiddenFiles()
-	require('telescope.builtin').find_files({ hidden = true })
-end
-local function fuzGrepString()
-	require('telescope.builtin').grep_string()
-end
-local function fuzLiveGrep()
-	require('telescope.builtin').live_grep()
-end
-local function fuzDiagnostics()
-	require('telescope.builtin').diagnostics()
-end
+	-- keymaps
+	local kset = vim.keymap.set
+	local t = require('telescope.builtin')
+	local small_dropdown = require('telescope.themes').get_dropdown({ previewer = false })
+	local telescope_search = function() t.current_buffer_fuzzy_find(small_dropdown) end
+	local find_hidden_files = function() t.find_file({ hidden = true }) end
 
+	kset('n', '<leader>?', t.oldfiles)
+	kset('n', '<leader>/', telescope_search)
+	kset('n', '<leader>fb', t.buffers)
+	kset('n', '<leader>fg', t.git_files)
+	kset('n', '<leader>ff', t.find_files)
+	kset('n', '<leader>fh', find_hidden_files)
+	kset('n', '<leader>sw', t.grep_string)
+	kset('n', '<leader>fs', t.live_grep)
+	kset('n', '<leader>fd', t.diagnostics)
+end
 
 return {
 	-- See `:help telescope` and `:help telescope.setup()`
@@ -51,20 +42,8 @@ return {
 			{
 				'nvim-telescope/telescope-fzf-native.nvim',
 				build = 'make',
-				cond = function()
-					return vim.fn.executable('make') == 1
-				end,
+				cond = function() return vim.fn.executable 'make' == 1 end,
 			},
-		},
-		keys = {
-			{ '<leader>/',  fuzSearch,      mode = 'n' },
-			{ '<leader>fb', fuzBuffers,     mode = 'n' },
-			{ '<leader>ff', fuzFiles,       mode = 'n' },
-			{ '<leader>fh', fuzHiddenFiles, mode = 'n' },
-			{ '<leader>fg', fuzGitFiles,    mode = 'n' },
-			{ '<leader>fw', fuzGrepString,  mode = 'n' },
-			{ '<leader>fs', fuzLiveGrep,    mode = 'n' },
-			{ '<leader>fd', fuzDiagnostics, mode = 'n' },
 		},
 		config = telescopeConfig,
 	},
