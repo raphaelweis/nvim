@@ -102,6 +102,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
+	'nvim-lua/plenary.nvim', -- utility functions required by some plugins
+
 	-- Git related plugins
 	'tpope/vim-fugitive',
 
@@ -156,6 +158,7 @@ require('lazy').setup({
 	-- "gc" to comment visual regions/lines
 	{ 'numToStr/Comment.nvim', opts = {} },
 
+	require("raphaelweis.harpoon"),
 	require("raphaelweis.telescope"),
 	require("raphaelweis.treesitter"),
 	require("raphaelweis.lsp"),
