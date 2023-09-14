@@ -2,8 +2,21 @@ local function dapConfig()
 	local dap = require('dap')
 	local dapui = require('dapui')
 
-	dapui.setup()
-	require('dap-go').setup()
+	dapui.setup({
+		controls = {
+			icons = {
+				disconnect = "",
+				pause = "",
+				play = "",
+				run_last = "",
+				step_back = "",
+				step_into = "",
+				step_out = "",
+				step_over = "",
+				terminate = ""
+			},
+		},
+	})
 
 	dap.listeners.after.event_initialized["dapui_config"] = function()
 		dapui.open()
@@ -23,6 +36,8 @@ local function dapConfig()
 		-- if I remove this then the debugging with nvim-dap-go won't work
 		go = {},
 	}
+
+	require('dap-go').setup()
 
 	-- Keybinds
 	local kset = vim.keymap.set
