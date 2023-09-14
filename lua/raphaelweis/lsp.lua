@@ -39,10 +39,17 @@ local function servers()
 			},
 		},
 	})
-
 	lspconfig["gopls"].setup({
 		capabilities = capabilities,
 		on_attach = on_attach,
+	})
+
+	-- This plugin will automatically configure dartls as well
+	require('flutter-tools').setup({
+		lsp = {
+			capabilities = capabilities,
+			on_attach = on_attach
+		}
 	})
 end
 
@@ -104,5 +111,8 @@ end
 
 return {
 	'neovim/nvim-lspconfig',
+	dependencies = {
+		'akinsho/flutter-tools.nvim',
+	},
 	config = lspConfig
 }
