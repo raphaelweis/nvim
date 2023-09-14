@@ -162,6 +162,7 @@ require('lazy').setup({
 	require("raphaelweis.telescope"),
 	require("raphaelweis.treesitter"),
 	require("raphaelweis.cmp"),
+	require("raphaelweis.mason"),
 	require("raphaelweis.lsp"),
 	require("raphaelweis.dap")
 }, {})
