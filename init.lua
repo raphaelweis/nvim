@@ -155,6 +155,18 @@ require('lazy').setup({
 		opts = { show_trailing_blankline_indent = false }
 	},
 
+	{
+		'folke/neodev.nvim',
+		opts = {
+			library = {
+				plugins = {
+					'nvim-dap-ui'
+				},
+				types = true,
+			},
+		}
+	},
+
 	-- "gc" to comment visual regions/lines
 	{ 'numToStr/Comment.nvim', opts = {} },
 
@@ -164,5 +176,5 @@ require('lazy').setup({
 	require("raphaelweis.cmp"),
 	require("raphaelweis.mason"),
 	require("raphaelweis.lsp"),
-	require("raphaelweis.dap")
+	require("raphaelweis.dap"),
 }, {})

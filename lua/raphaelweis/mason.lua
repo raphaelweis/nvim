@@ -1,7 +1,11 @@
 local function masonConfig()
 	require('mason').setup()
-	require('mason-lspconfig').setup()
-	require('mason-nvim-dap').setup()
+	require('mason-lspconfig').setup({
+		handlers = {}
+	})
+	require('mason-nvim-dap').setup({
+		handlers = {},
+	})
 end
 
 return {
