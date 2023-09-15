@@ -1,11 +1,17 @@
 local function masonConfig()
-	require('mason').setup()
-	require('mason-lspconfig').setup({
-		handlers = {}
+	require('mason').setup({
+		ensure_installed = {
+			-- lsp
+			'clangd',
+			'gopls',
+
+			-- debuggers
+			'delve',
+			'codelldb',
+		}
 	})
-	require('mason-nvim-dap').setup({
-		handlers = {},
-	})
+	require('mason-nvim-dap').setup({ handlers = {} })
+	require('mason-lspconfig').setup()
 end
 
 return {

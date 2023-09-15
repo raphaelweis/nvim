@@ -64,6 +64,22 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 	pattern = '*',
 })
 
+-- [[ indentation based on filetype ]]
+local function setIndentation(filetype, shiftwidth, softtabstop, tabstop, expandtab)
+	vim.api.nvim_create_autocmd('FileType', {
+		callback = function()
+			vim.bo.shiftwidth = shiftwidth
+			vim.bo.softtabstop = softtabstop
+			vim.bo.tabstop = tabstop
+			vim.bo.expandtab = expandtab
+		end,
+		pattern = filetype,
+	})
+end
+
+-- Set 2 spaces for Dart files
+setIndentation('dart', 2, 2, 2, 1)
+
 -----------------------------
 -- Keymaps
 -----------------------------
@@ -174,7 +190,7 @@ require('lazy').setup({
 	require("raphaelweis.telescope"),
 	require("raphaelweis.treesitter"),
 	require("raphaelweis.cmp"),
-	require("raphaelweis.mason"),
+	-- require("raphaelweis.mason"),
 	require("raphaelweis.lsp"),
 	require("raphaelweis.dap"),
 }, {})

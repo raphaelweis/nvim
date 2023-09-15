@@ -3,15 +3,17 @@ local function servers()
 	-- Language servers configuration
 	-- import lspconfig plugin
 	local lspconfig = require("lspconfig")
-	local on_attach = function(_, bufnr)
+	---@diagnostic disable-next-line: unused-local
+	local on_attach = function(client, bufnr)
 		local opts = { buffer = bufnr }
-		vim.keymap.set("n", "gR", "<CMD>Telescope lsp_references<CR>", opts)
+		local t = require('telescope.builtin')
+		vim.keymap.set("n", "gr", t.lsp_references, opts)
 		vim.keymap.set("n", "<leader>fm", vim.lsp.buf.format, opts)
 		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-		vim.keymap.set("n", "gD", "<CMD>Telescope lsp_definitions<CR>", opts)
-		vim.keymap.set("n", "gi", "<CMD>Telescope lsp_implementations<CR>", opts)
-		vim.keymap.set("n", "gt", "<CMD>Telescope lsp_type_definitions<CR>", opts)
+		vim.keymap.set("n", "gD", t.lsp_definitions, opts)
+		vim.keymap.set("n", "gi", t.lsp_implementations, opts)
+		vim.keymap.set("n", "gt", t.lsp_type_definitions, opts)
 		vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 		vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
 		vim.keymap.set("n", "gpd", vim.diagnostic.goto_prev, opts)
@@ -43,11 +45,18 @@ local function servers()
 		capabilities = capabilities,
 		on_attach = on_attach,
 	})
+	lspconfig["clangd"].setup({
+		capabilities = capabilities,
+		on_attach = function(client, bufnr)
+			client.server_capabilities.signatureHelpProvider = false
+			on_attach(client, bufnr)
+		end,
+	})
 
 	-- This plugin will automatically configure dartls as well
 	require('flutter-tools').setup({
 		widget_guides = {
-			enabled = false,
+			enabled = true,
 		},
 		lsp = {
 			capabilities = capabilities,

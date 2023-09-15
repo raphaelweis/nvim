@@ -18,15 +18,6 @@ local function dapConfig()
 		dapui.close()
 	end
 
-	dap.defaults = {
-		dart = {
-			-- this disables the breakpoints on exceptions for the dart language
-			exception_breakpoints = {},
-		},
-		-- if I remove this then the debugging with nvim-dap-go won't work
-		go = {},
-	}
-
 	local bg_color = '#403d52'
 	vim.api.nvim_set_hl(0, 'red', { fg = '#fd504f' })
 	vim.api.nvim_set_hl(0, 'green', { fg = '#99fb98', bg = bg_color })
@@ -59,6 +50,36 @@ local function dapConfig()
 		linehl = 'bg',
 		numhl = 'green',
 	})
+
+	dap.defaults = {
+		dart = {
+			-- this disables the breakpoints on exceptions for the dart language
+			exception_breakpoints = {},
+		},
+		-- if I remove this then the debugging with nvim-dap-go won't work
+		go = {},
+	}
+	dap.adapters = {
+		cppdbg = {
+			id = 'cppdbg',
+			type = 'executable',
+			command = '/opt/cpptools/debugAdapters/bin/OpenDebugAD7',
+		},
+	}
+	dap.configurations = {
+		c = {
+			{
+				name = 'Launch file',
+				type = 'cppdbg',
+				request = 'launch',
+				program = function()
+					return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+				end,
+				cwd = '${workspaceFolder}',
+				stopAtEntry = true,
+			},
+		}
+	}
 
 	require('dap-go').setup()
 
