@@ -22,6 +22,7 @@ local function telescopeConfig()
 
 	kset('n', '<leader>?', t.oldfiles)
 	kset('n', '<leader>/', telescope_search)
+	kset('n', '<leader>fc', t.commands)
 	kset('n', '<leader>fb', t.buffers)
 	kset('n', '<leader>fg', t.git_files)
 	kset('n', '<leader>ff', t.find_files)

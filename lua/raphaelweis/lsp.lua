@@ -46,6 +46,9 @@ local function servers()
 
 	-- This plugin will automatically configure dartls as well
 	require('flutter-tools').setup({
+		widget_guides = {
+			enabled = false,
+		},
 		lsp = {
 			capabilities = capabilities,
 			on_attach = on_attach
@@ -54,6 +57,9 @@ local function servers()
 			enabled = true,
 			run_via_dap = true,
 		},
+		dev_log = {
+			enabled = false -- we disable this because we can see the logs in dapui
+		}
 	})
 end
 
