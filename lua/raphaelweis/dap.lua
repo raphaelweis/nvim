@@ -4,17 +4,7 @@ local function dapConfig()
 
 	dapui.setup({
 		controls = {
-			icons = {
-				disconnect = "",
-				pause = "",
-				play = "",
-				run_last = "",
-				step_back = "",
-				step_into = "",
-				step_out = "",
-				step_over = "",
-				terminate = ""
-			},
+			enabled = false,
 		},
 	})
 
@@ -37,6 +27,39 @@ local function dapConfig()
 		go = {},
 	}
 
+	local bg_color = '#403d52'
+	vim.api.nvim_set_hl(0, 'red', { fg = '#fd504f' })
+	vim.api.nvim_set_hl(0, 'green', { fg = '#99fb98', bg = bg_color })
+	vim.api.nvim_set_hl(0, 'bg', { bg = bg_color })
+
+
+	vim.fn.sign_define('DapBreakpoint', {
+		text = '',
+		texthl = 'red',
+		linehl = 'DapBreakpoint',
+		numhl = 'DapBreakpoint',
+	})
+	vim.fn.sign_define('DapBreakpointCondition',
+		{
+			text = '',
+			texthl = 'red',
+			linehl = 'DapBreakpoint',
+			numhl = 'DapBreakpoint',
+		})
+	vim.fn.sign_define('DapBreakpointRejected',
+		{
+			text = '',
+			texthl = 'red',
+			linehl = 'DapBreakpoint',
+			numhl = 'DapBreakpoint',
+		})
+	vim.fn.sign_define('DapStopped', {
+		text = '',
+		texthl = 'green',
+		linehl = 'bg',
+		numhl = 'green',
+	})
+
 	require('dap-go').setup()
 
 	-- Keybinds
@@ -46,7 +69,7 @@ local function dapConfig()
 	kset('n', '<F6>', dap.step_over)
 	kset('n', '<F7>', dap.step_into)
 	kset('n', '<F7>', dap.step_out)
-	kset('n', '<F1>', dap.repl.toggle)
+	kset('n', '<F1>', dapui.toggle)
 end
 
 return {
