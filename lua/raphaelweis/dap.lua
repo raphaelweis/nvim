@@ -51,36 +51,33 @@ local function dapConfig()
 		numhl = 'green',
 	})
 
-	dap.defaults = {
-		dart = {
-			-- this disables the breakpoints on exceptions for the dart language
-			exception_breakpoints = {},
-		},
-		-- if I remove this then the debugging with nvim-dap-go won't work
-		go = {},
+	-- [[ Default client options ]]
+	-- Ignore unhandled exceptions in dart
+	dap.defaults.dart.exception_breakpoints = {}
+	-- Reset defaults for go, won' t work otherwise
+	-- dap.defaults.go = {}
+
+	-- [[ Languages configurations ]]
+	-- C debugging
+	dap.adapters.cppdbg = {
+		id = 'cppdbg',
+		type = 'executable',
+		command = '/opt/cpptools/debugAdapters/bin/OpenDebugAD7',
 	}
-	dap.adapters = {
-		cppdbg = {
-			id = 'cppdbg',
-			type = 'executable',
-			command = '/opt/cpptools/debugAdapters/bin/OpenDebugAD7',
+	dap.configurations.c = {
+		{
+			name = 'Launch file',
+			type = 'cppdbg',
+			request = 'launch',
+			program = function()
+				return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+			end,
+			cwd = '${workspaceFolder}',
+			stopAtEntry = true,
 		},
-	}
-	dap.configurations = {
-		c = {
-			{
-				name = 'Launch file',
-				type = 'cppdbg',
-				request = 'launch',
-				program = function()
-					return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-				end,
-				cwd = '${workspaceFolder}',
-				stopAtEntry = true,
-			},
-		}
 	}
 
+	-- [[ Custom plugins ]]
 	require('dap-go').setup()
 
 	-- Keybinds
