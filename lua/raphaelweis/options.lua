@@ -16,9 +16,6 @@ vim.wo.number = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 
--- Set colored column at 80 characters
-vim.opt.colorcolumn = '80'
-
 -- Enable relative line numbers
 vim.o.relativenumber = true
 
