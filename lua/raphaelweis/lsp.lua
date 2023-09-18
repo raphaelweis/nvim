@@ -45,12 +45,9 @@ local function servers()
 		capabilities = capabilities,
 		on_attach = on_attach,
 	})
-	lspconfig["clangd"].setup({
+	lspconfig['clangd'].setup({
 		capabilities = capabilities,
-		on_attach = function(client, bufnr)
-			client.server_capabilities.signatureHelpProvider = false
-			on_attach(client, bufnr)
-		end,
+		on_attach = on_attach,
 	})
 	lspconfig["nil_ls"].setup({
 		capabilities = capabilities,
