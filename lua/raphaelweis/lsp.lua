@@ -46,12 +46,28 @@ local function servers()
 		on_attach = on_attach,
 	})
 	lspconfig['clangd'].setup({
+		cmd = {
+			'clangd',
+			"--fallback-style=Google",
+		},
 		capabilities = capabilities,
 		on_attach = on_attach,
 	})
 	lspconfig["nil_ls"].setup({
 		capabilities = capabilities,
 		on_attach = on_attach,
+		settings = {
+			['nil'] = {
+				formatting = {
+					command = { "nixpkgs-fmt" },
+				},
+				nix = {
+					flake = {
+						autoArchive = true,
+					},
+				},
+			},
+		},
 	})
 
 	-- This plugin will automatically configure dartls as well

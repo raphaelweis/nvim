@@ -64,7 +64,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 	pattern = '*',
 })
 
--- [[ indentation based on filetype ]]
+-- [[ helper function for indentation based on filetype ]]
 local function setIndentation(filetype, shiftwidth, softtabstop, tabstop, expandtab)
 	vim.api.nvim_create_autocmd('FileType', {
 		callback = function()
@@ -77,5 +77,8 @@ local function setIndentation(filetype, shiftwidth, softtabstop, tabstop, expand
 	})
 end
 
--- Set 2 spaces for Dart files
+-- Set 2 spaces for these filetypes
 setIndentation('dart', 2, 2, 2, 1)
+setIndentation('c', 2, 2, 2, 1)
+setIndentation('nix', 2, 2, 2, 1)
+setIndentation('html', 2, 2, 2, 1)
