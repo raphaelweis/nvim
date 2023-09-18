@@ -11,7 +11,4 @@ local function harpoonConfig()
 	kset('n', '<leader>l', function() ui.nav_file(4) end)
 end
 
-return {
-	'ThePrimeagen/harpoon',
-	config = harpoonConfig,
-}
+return harpoonConfig

@@ -93,11 +93,4 @@ local function dapConfig()
 	kset('n', '<F1>', dapui.toggle)
 end
 
-return {
-	'mfussenegger/nvim-dap',
-	dependencies = {
-		'rcarriga/nvim-dap-ui',
-		'leoluz/nvim-dap-go',
-	},
-	config = dapConfig,
-}
+return dapConfig

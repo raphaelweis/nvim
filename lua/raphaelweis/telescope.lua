@@ -32,20 +32,4 @@ local function telescopeConfig()
 	kset('n', '<leader>fd', t.diagnostics)
 end
 
-return {
-	-- See `:help telescope` and `:help telescope.setup()`
-	-- Fuzzy Finder (files, lsp, etc)
-	{
-		'nvim-telescope/telescope.nvim',
-		branch = '0.1.x',
-		dependencies = {
-			'nvim-lua/plenary.nvim',
-			{
-				'nvim-telescope/telescope-fzf-native.nvim',
-				build = 'make',
-				cond = function() return vim.fn.executable 'make' == 1 end,
-			},
-		},
-		config = telescopeConfig,
-	},
-}
+return telescopeConfig

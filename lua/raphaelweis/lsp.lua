@@ -52,6 +52,10 @@ local function servers()
 			on_attach(client, bufnr)
 		end,
 	})
+	lspconfig["nil_ls"].setup({
+		capabilities = capabilities,
+		on_attach = on_attach,
+	})
 
 	-- This plugin will automatically configure dartls as well
 	require('flutter-tools').setup({
@@ -128,10 +132,4 @@ local function lspConfig()
 	formatOnSave()
 end
 
-return {
-	'neovim/nvim-lspconfig',
-	dependencies = {
-		'akinsho/flutter-tools.nvim',
-	},
-	config = lspConfig
-}
+return lspConfig
