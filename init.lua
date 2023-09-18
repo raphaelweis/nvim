@@ -78,6 +78,14 @@ require('lazy').setup({
 		config = require('raphaelweis.cmp')
 	},
 	{
+		'williamboman/mason.nvim',
+		dependencies = {
+			'williamboman/mason-lspconfig.nvim',
+			'jay-babu/mason-nvim-dap.nvim',
+		},
+		config = require('raphaelweis.mason'),
+	},
+	{
 		'neovim/nvim-lspconfig',
 		dependencies = {
 			'akinsho/flutter-tools.nvim',

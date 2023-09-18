@@ -4,21 +4,15 @@ local function masonConfig()
 			-- lsp
 			'clangd',
 			'gopls',
+			'nil',
 
 			-- debuggers
 			'delve',
 			'codelldb',
 		}
 	})
-	require('mason-nvim-dap').setup({ handlers = {} })
 	require('mason-lspconfig').setup()
+	require('mason-nvim-dap').setup({ handlers = {} })
 end
 
-return {
-	'williamboman/mason.nvim',
-	dependencies = {
-		'williamboman/mason-lspconfig.nvim',
-		'jay-babu/mason-nvim-dap.nvim',
-	},
-	config = masonConfig
-}
+return masonConfig
