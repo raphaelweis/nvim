@@ -21,5 +21,7 @@ require('mason-nvim-dap').setup({
 require('mason-tool-installer').setup({
 	ensure_installed = {
 		"prettier",
+		"stylua",
+		"clang-format",
 	},
 })
