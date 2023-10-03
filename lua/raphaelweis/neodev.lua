@@ -1,12 +1,8 @@
-local function neodevConfig()
-	require('neodev').setup({
-		library = {
-			plugins = {
-				'nvim-dap-ui'
-			},
-			types = true,
+require('neodev').setup({
+	library = {
+		plugins = {
+			'nvim-dap-ui'
 		},
-	})
-end
-
-return neodevConfig
+		types = true,
+	},
+})

@@ -18,34 +18,42 @@ require('lazy').setup({
 	{
 		'ellisonleao/gruvbox.nvim',
 		priority = 1000,
-		config = require('raphaelweis.gruvbox'),
+		config = function() require('raphaelweis.gruvbox') end,
+	},
+	{
+		'troydm/zoomwintab.vim',
+		config = function() require('raphaelweis.zoomwintab') end,
 	},
 	{ 'nvim-lua/plenary.nvim' },
 	{ 'tpope/vim-fugitive' },
 	{ 'christoomey/vim-tmux-navigator' },
 	{
+		'nvim-tree/nvim-tree.lua',
+		config = function() require('raphaelweis.tree') end,
+	},
+	{
 		'windwp/nvim-autopairs',
-		config = require('raphaelweis.autopairs'),
+		config = function() require('raphaelweis.autopairs') end,
 	},
 	{
 		'lewis6991/gitsigns.nvim',
-		config = require('raphaelweis.gitsigns'),
+		config = function() require('raphaelweis.gitsigns') end,
 	},
 	{
 		'lukas-reineke/indent-blankline.nvim',
-		config = require('raphaelweis.indent_blankline')
+		config = function() require('raphaelweis.indent_blankline') end,
 	},
 	{
 		'folke/neodev.nvim',
-		config = require('raphaelweis.neodev'),
+		config = function() require('raphaelweis.neodev') end,
 	},
 	{
 		'numToStr/Comment.nvim',
-		config = require('raphaelweis.comment'),
+		config = function() require('raphaelweis.comment') end,
 	},
 	{
 		'ThePrimeagen/harpoon',
-		config = require('raphaelweis.harpoon'),
+		config = function() require('raphaelweis.harpoon') end,
 	},
 	{
 		'nvim-telescope/telescope.nvim',
@@ -57,7 +65,7 @@ require('lazy').setup({
 				cond = function() return vim.fn.executable 'make' == 1 end,
 			},
 		},
-		config = require('raphaelweis.telescope'),
+		config = function() require('raphaelweis.telescope') end,
 	},
 	{
 		'nvim-treesitter/nvim-treesitter',
@@ -65,7 +73,7 @@ require('lazy').setup({
 			'nvim-treesitter/nvim-treesitter-textobjects',
 		},
 		build = ':TSUpdate',
-		config = require('raphaelweis.treesitter')
+		config = function() require('raphaelweis.treesitter') end
 	},
 	{
 		'hrsh7th/nvim-cmp',
@@ -75,22 +83,27 @@ require('lazy').setup({
 			'hrsh7th/cmp-nvim-lsp',
 			'rafamadriz/friendly-snippets',
 		},
-		config = require('raphaelweis.cmp')
+		config = function() require('raphaelweis.cmp') end,
 	},
 	{
 		'williamboman/mason.nvim',
 		dependencies = {
 			'williamboman/mason-lspconfig.nvim',
 			'jay-babu/mason-nvim-dap.nvim',
+			'WhoIsSethDaniel/mason-tool-installer.nvim',
 		},
-		config = require('raphaelweis.mason'),
+		config = function() require('raphaelweis.mason') end,
+	},
+	{
+		'mhartington/formatter.nvim',
+		config = function() require('raphaelweis.formatter') end,
 	},
 	{
 		'neovim/nvim-lspconfig',
 		dependencies = {
 			'akinsho/flutter-tools.nvim',
 		},
-		config = require('raphaelweis.lsp'),
+		config = function() require('raphaelweis.lsp') end,
 	},
 	{
 		'mfussenegger/nvim-dap',
@@ -98,6 +111,6 @@ require('lazy').setup({
 			'rcarriga/nvim-dap-ui',
 			'leoluz/nvim-dap-go',
 		},
-		config = require('raphaelweis.dap'),
+		config = function() require('raphaelweis.dap') end,
 	},
 }, {})
