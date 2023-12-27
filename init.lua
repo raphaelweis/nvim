@@ -10,6 +10,7 @@ vim.opt.relativenumber = true
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.hlsearch = false
+vim.opt.signcolumn = "yes"
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.colorcolumn = "80"
@@ -36,20 +37,23 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
 	"tpope/vim-surround",
 	"tpope/vim-fugitive",
+	"nvim-lua/plenary.nvim",
 	{ "ellisonleao/gruvbox.nvim", opts = { transparent_mode = true } },
 	{ "numToStr/Comment.nvim", opts = {}, lazy = false },
+	{ "lewis6991/gitsigns.nvim", opts = {} },
 	{ "windwp/nvim-autopairs", event = "InsertEnter", opts = {} },
 	{ "mhartington/formatter.nvim", opts = {} },
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+	{ "nvim-telescope/telescope.nvim", branch = "0.1.x" },
+	"hrsh7th/nvim-cmp",
+	"hrsh7th/cmp-nvim-lsp",
+	"hrsh7th/cmp-buffer",
+	"hrsh7th/cmp-path",
+	"L3MON4D3/LuaSnip",
+	"saadparwaiz1/cmp_luasnip",
 	"neovim/nvim-lspconfig",
 }
 require("lazy").setup(plugins, {})
-
--- Treesitter configuration
-require("nvim-treesitter.configs").setup({
-	auto_install = true,
-	highlight = { enable = true },
-})
 
 -- Formatter configuration
 require("formatter").setup({
@@ -60,11 +64,42 @@ require("formatter").setup({
 	},
 })
 
+-- Treesitter configuration
+require("nvim-treesitter.configs").setup({
+	auto_install = true,
+	highlight = { enable = true },
+})
+
+-- Cmp configuration
+local cmp = require("cmp")
+cmp.setup({
+	snippet = {
+		expand = function(args)
+			require("luasnip").lsp_expand(args.body)
+		end,
+	},
+	mapping = cmp.mapping.preset.insert({
+		["<C-j>"] = cmp.mapping.select_next_item(),
+		["<C-k>"] = cmp.mapping.select_prev_item(),
+		["<C-Space>"] = cmp.mapping.complete(),
+		["<C-e>"] = cmp.mapping.abort(),
+		["<CR>"] = cmp.mapping.confirm({ select = true }),
+		["<TAB>"] = cmp.mapping.confirm({ select = true }),
+	}),
+	sources = cmp.config.sources({
+		{ name = "nvim_lsp" },
+		{ name = "luasnip" }, -- For luasnip users.
+	}, {
+		{ name = "buffer" },
+		{ name = "path" },
+	}),
+})
+
 -- LSP configuration
-vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 	callback = function(ev)
@@ -79,22 +114,24 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 		vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
-		vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
-		vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
-		vim.keymap.set("n", "<space>wl", function()
+		vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts)
+		vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts)
+		vim.keymap.set("n", "<leader>wl", function()
 			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 		end, opts)
-		vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
-		vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
-		vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
+		vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
+		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+		vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 		vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-		vim.keymap.set("n", "<space>f", function()
+		vim.keymap.set("n", "<leader>f", function()
 			vim.lsp.buf.format({ async = true })
 		end, opts)
 	end,
 })
 
-require("lspconfig").lua_ls.setup({
+local lspconfig = require("lspconfig")
+lspconfig.clangd.setup({})
+lspconfig.lua_ls.setup({
 	on_init = function(client)
 		local path = client.workspace_folders[1].name
 		if not vim.loop.fs_stat(path .. "/.luarc.json") and not vim.loop.fs_stat(path .. "/.luarc.jsonc") then
@@ -109,6 +146,22 @@ require("lspconfig").lua_ls.setup({
 		return true
 	end,
 })
+
+-- Telescope configuration
+require("telescope").setup({
+	defaults = {
+		mappings = {
+			i = {
+				["<C-j>"] = "move_selection_next",
+				["<C-k>"] = "move_selection_prev",
+			},
+		},
+	},
+})
+
+local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader>ff", builtin.find_files)
+vim.keymap.set("n", "<leader>fs", builtin.live_grep)
 
 -- Cmds
 vim.cmd("colorscheme gruvbox")
