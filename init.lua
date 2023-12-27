@@ -153,7 +153,7 @@ require("telescope").setup({
 		mappings = {
 			i = {
 				["<C-j>"] = "move_selection_next",
-				["<C-k>"] = "move_selection_prev",
+				["<C-k>"] = "move_selection_previous",
 			},
 		},
 	},
@@ -162,6 +162,7 @@ require("telescope").setup({
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files)
 vim.keymap.set("n", "<leader>fs", builtin.live_grep)
+vim.keymap.set("n", "<leader>fc", builtin.commands)
 
 -- Cmds
 vim.cmd("colorscheme gruvbox")
