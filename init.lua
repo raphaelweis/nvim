@@ -1,9 +1,10 @@
 -- Options and Keymaps
 vim.g.mapleader = " "
-vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
+vim.g.filetype_plugin = true
+vim.g.filetype_indent = true
 
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -52,6 +53,9 @@ local plugins = {
 	"L3MON4D3/LuaSnip",
 	"saadparwaiz1/cmp_luasnip",
 	"neovim/nvim-lspconfig",
+	"lervag/vimtex",
+	"vim-pandoc/vim-pandoc",
+	"vim-pandoc/vim-pandoc-syntax",
 }
 require("lazy").setup(plugins, {})
 
@@ -67,7 +71,7 @@ require("formatter").setup({
 -- Treesitter configuration
 require("nvim-treesitter.configs").setup({
 	auto_install = true,
-	highlight = { enable = true },
+	highlight = { enable = true, disable = { "latex" } },
 })
 
 -- Cmp configuration
@@ -163,6 +167,9 @@ local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files)
 vim.keymap.set("n", "<leader>fs", builtin.live_grep)
 vim.keymap.set("n", "<leader>fc", builtin.commands)
+
+-- Vimtex Configuration
+vim.g.vimtex_view_method = "zathura"
 
 -- Cmds
 vim.cmd("colorscheme gruvbox")
