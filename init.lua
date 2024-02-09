@@ -46,6 +46,14 @@ local plugins = {
 	{ "mhartington/formatter.nvim", opts = {} },
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 	{ "nvim-telescope/telescope.nvim", branch = "0.1.x" },
+	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		ft = { "markdown" },
+		build = function()
+			vim.fn["mkdp#util#install"]()
+		end,
+	},
 	"hrsh7th/nvim-cmp",
 	"hrsh7th/cmp-nvim-lsp",
 	"hrsh7th/cmp-buffer",
@@ -54,8 +62,6 @@ local plugins = {
 	"saadparwaiz1/cmp_luasnip",
 	"neovim/nvim-lspconfig",
 	"lervag/vimtex",
-	"vim-pandoc/vim-pandoc",
-	"vim-pandoc/vim-pandoc-syntax",
 }
 require("lazy").setup(plugins, {})
 
@@ -135,6 +141,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 local lspconfig = require("lspconfig")
 lspconfig.clangd.setup({})
+lspconfig.marksman.setup({})
+lspconfig.texlab.setup({})
 lspconfig.lua_ls.setup({
 	on_init = function(client)
 		local path = client.workspace_folders[1].name
@@ -167,6 +175,10 @@ local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files)
 vim.keymap.set("n", "<leader>fs", builtin.live_grep)
 vim.keymap.set("n", "<leader>fc", builtin.commands)
+
+-- MarkdownPreview Configuration
+vim.g.mkdp_page_title = "${name}"
+vim.keymap.set("n", "<leader>mp", "<CMD>MarkdownPreviewToggle<CR>")
 
 -- Vimtex Configuration
 vim.g.vimtex_view_method = "zathura"
