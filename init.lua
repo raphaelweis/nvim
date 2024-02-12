@@ -5,11 +5,14 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
 vim.g.filetype_plugin = true
 vim.g.filetype_indent = true
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
+vim.opt.termguicolors = true
 vim.opt.hlsearch = false
 vim.opt.signcolumn = "yes"
 vim.opt.ignorecase = true
@@ -39,7 +42,7 @@ local plugins = {
 	"tpope/vim-surround",
 	"tpope/vim-fugitive",
 	"nvim-lua/plenary.nvim",
-	{ "ellisonleao/gruvbox.nvim", opts = { transparent_mode = true } },
+	{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true, opts = {} },
 	{ "numToStr/Comment.nvim", opts = {}, lazy = false },
 	{ "lewis6991/gitsigns.nvim", opts = {} },
 	{ "windwp/nvim-autopairs", event = "InsertEnter", opts = {} },
@@ -53,6 +56,30 @@ local plugins = {
 		build = function()
 			vim.fn["mkdp#util#install"]()
 		end,
+	},
+	{
+		"nvim-tree/nvim-tree.lua",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		cmd = { "NvimTreeToggle" },
+		keys = { { "<leader>e", "<CMD>NvimTreeToggle<CR>" } },
+		opts = {},
+	},
+	{
+		"christoomey/vim-tmux-navigator",
+		cmd = {
+			"TmuxNavigateLeft",
+			"TmuxNavigateDown",
+			"TmuxNavigateUp",
+			"TmuxNavigateRight",
+			"TmuxNavigatePrevious",
+		},
+		keys = {
+			{ "<c-h>", "<CMD><C-U>TmuxNavigateLeft<CR>" },
+			{ "<c-j>", "<CMD><C-U>TmuxNavigateDown<CR>" },
+			{ "<c-k>", "<CMD><C-U>TmuxNavigateUp<CR>" },
+			{ "<c-l>", "<CMD><C-U>TmuxNavigateRight<CR>" },
+			{ "<c-\\>", "<CMD><C-U>TmuxNavigatePrevious<CR>" },
+		},
 	},
 	"hrsh7th/nvim-cmp",
 	"hrsh7th/cmp-nvim-lsp",
