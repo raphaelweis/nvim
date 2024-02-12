@@ -42,13 +42,13 @@ local plugins = {
 	"tpope/vim-surround",
 	"tpope/vim-fugitive",
 	"nvim-lua/plenary.nvim",
-	{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true, opts = {} },
-	{ "numToStr/Comment.nvim", opts = {}, lazy = false },
-	{ "lewis6991/gitsigns.nvim", opts = {} },
-	{ "windwp/nvim-autopairs", event = "InsertEnter", opts = {} },
-	{ "mhartington/formatter.nvim", opts = {} },
+	{ "ellisonleao/gruvbox.nvim",        priority = 1000,       config = true, opts = {} },
+	{ "numToStr/Comment.nvim",           opts = {},             lazy = false },
+	{ "lewis6991/gitsigns.nvim",         opts = {} },
+	{ "windwp/nvim-autopairs",           event = "InsertEnter", opts = {} },
+	{ "mhartington/formatter.nvim",      opts = {} },
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-	{ "nvim-telescope/telescope.nvim", branch = "0.1.x" },
+	{ "nvim-telescope/telescope.nvim",   branch = "0.1.x" },
 	{
 		"iamcco/markdown-preview.nvim",
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -74,10 +74,10 @@ local plugins = {
 			"TmuxNavigatePrevious",
 		},
 		keys = {
-			{ "<c-h>", "<CMD><C-U>TmuxNavigateLeft<CR>" },
-			{ "<c-j>", "<CMD><C-U>TmuxNavigateDown<CR>" },
-			{ "<c-k>", "<CMD><C-U>TmuxNavigateUp<CR>" },
-			{ "<c-l>", "<CMD><C-U>TmuxNavigateRight<CR>" },
+			{ "<c-h>",  "<CMD><C-U>TmuxNavigateLeft<CR>" },
+			{ "<c-j>",  "<CMD><C-U>TmuxNavigateDown<CR>" },
+			{ "<c-k>",  "<CMD><C-U>TmuxNavigateUp<CR>" },
+			{ "<c-l>",  "<CMD><C-U>TmuxNavigateRight<CR>" },
 			{ "<c-\\>", "<CMD><C-U>TmuxNavigatePrevious<CR>" },
 		},
 	},
@@ -133,7 +133,7 @@ cmp.setup({
 })
 
 -- LSP configuration
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
+vim.keymap.set("n", "<leader>f", vim.diagnostic.open_float)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
