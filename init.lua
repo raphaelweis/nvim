@@ -103,6 +103,15 @@ require("formatter").setup({
 
 -- Treesitter configuration
 require("nvim-treesitter.configs").setup({
+	ensure_installed = {
+		"c",
+		"lua",
+		"bash",
+		"javascript",
+		"vim",
+		"markdown",
+		"markdown_inline",
+	},
 	auto_install = true,
 	highlight = { enable = true, disable = { "latex" } },
 })
