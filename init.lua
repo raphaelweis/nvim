@@ -1,5 +1,6 @@
 -- Options and Keymaps
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
@@ -13,7 +14,7 @@ vim.opt.relativenumber = true
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.termguicolors = true
-vim.opt.hlsearch = false
+vim.opt.hlsearch = true
 vim.opt.signcolumn = "yes"
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
@@ -21,7 +22,26 @@ vim.opt.colorcolumn = "80"
 vim.opt.undofile = true
 vim.opt.clipboard:append("unnamedplus")
 
+-- Disable search highlight when pressing escape
 vim.keymap.set("n", "<Esc>", "<CMD>noh<CR>")
+
+-- Deal with word wrap better
+vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+-- Center screen after moving in half pages
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+
+-- Highlight on yank
+local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
+vim.api.nvim_create_autocmd("TextYankPost", {
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+	group = highlight_group,
+	pattern = "*",
+})
 
 -- Lazy Bootstrap
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
