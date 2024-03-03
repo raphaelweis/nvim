@@ -60,12 +60,15 @@ local plugins = {
 	},
 	{ "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
 	"rafamadriz/friendly-snippets",
+	"neovim/nvim-lspconfig",
+	"williamboman/mason.nvim",
+	"WhoIsSethDaniel/mason-tool-installer.nvim",
+	"williamboman/mason-lspconfig.nvim",
 	"hrsh7th/nvim-cmp",
 	"hrsh7th/cmp-nvim-lsp",
 	"hrsh7th/cmp-buffer",
 	"hrsh7th/cmp-path",
 	"saadparwaiz1/cmp_luasnip",
-	"neovim/nvim-lspconfig",
 	"stevearc/conform.nvim",
 	"lervag/vimtex",
 }
@@ -225,26 +228,34 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
-local lspconfig = require("lspconfig")
-lspconfig.clangd.setup({})
-lspconfig.marksman.setup({})
-lspconfig.texlab.setup({})
-lspconfig.bashls.setup({})
-lspconfig.html.setup({})
-lspconfig.cssls.setup({})
-lspconfig.jsonls.setup({})
-lspconfig.tsserver.setup({})
-vim.lsp.set_log_level("debug")
-require("vim.lsp.log").set_format_func(vim.inspect)
-require("lspconfig").lua_ls.setup({
-	settings = {
-		Lua = {
-			runtime = { version = "LuaJIT" },
-			workspace = {
-				checkThirdParty = false,
-				library = { vim.env.VIMRUNTIME, "${3rd}/luv/library", "${3rd}/busted/library" },
+-- For debug purposes (uncomment if needed)
+-- vim.lsp.set_log_level("debug")
+-- require("vim.lsp.log").set_format_func(vim.inspect)
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+local servers = {
+	lua_ls = {
+		settings = {
+			Lua = {
+				runtime = { version = "LuaJIT" },
+				workspace = {
+					checkThirdParty = false,
+					library = { vim.env.VIMRUNTIME, "${3rd}/luv/library", "${3rd}/busted/library" },
+				},
 			},
 		},
+	},
+}
+require("mason").setup()
+require("mason-tool-installer").setup({})
+require("mason-lspconfig").setup({
+	handlers = {
+		function(server_name)
+			local server = servers[server_name] or {}
+			server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+			require("lspconfig")[server_name].setup(server)
+		end,
 	},
 })
 
