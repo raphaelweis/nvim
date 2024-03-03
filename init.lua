@@ -50,7 +50,6 @@ local plugins = {
 	{ "numToStr/Comment.nvim", opts = {} },
 	{ "lewis6991/gitsigns.nvim", opts = {} },
 	{ "windwp/nvim-autopairs", event = "InsertEnter", opts = {} },
-	{ "mhartington/formatter.nvim", opts = {} },
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 	{ "nvim-telescope/telescope.nvim", branch = "0.1.x" },
 	{
@@ -67,6 +66,7 @@ local plugins = {
 	"hrsh7th/cmp-path",
 	"saadparwaiz1/cmp_luasnip",
 	"neovim/nvim-lspconfig",
+	"stevearc/conform.nvim",
 	"lervag/vimtex",
 }
 require("lazy").setup(plugins, {})
@@ -105,12 +105,18 @@ end, { desc = "Go to harpoon file (4)" })
 require("luasnip.loaders.from_vscode").lazy_load()
 
 -- Formatter configuration
-require("formatter").setup({
-	filetype = {
-		c = { require("formatter.filetypes.c").clangformat },
-		lua = { require("formatter.filetypes.lua").stylua },
-		markdown = { require("formatter.filetypes.markdown").prettier },
-		["*"] = { require("formatter.filetypes.any").remove_trailing_whitespace },
+require("conform").setup({
+	formatters_by_ft = {
+		lua = { "stylua" },
+		c = { "clang_format" },
+		go = { "gofmt" },
+		javascript = { "prettier" },
+		tex = { "latexindent" },
+		html = { "prettier" },
+		css = { "prettier" },
+		json = { "jq" },
+		yaml = { "prettier" },
+		markdown = { "prettier" },
 	},
 })
 
@@ -269,8 +275,12 @@ vim.keymap.set("n", "<leader>mp", "<CMD>MarkdownPreview<CR>", { desc = "Open a p
 vim.g.vimtex_view_method = "zathura"
 
 -- Autocmds
-vim.api.nvim_create_augroup("__formatter__", { clear = true })
-vim.api.nvim_create_autocmd("BufWritePost", { group = "__formatter__", command = ":FormatWrite" })
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = "*",
+	callback = function(args)
+		require("conform").format({ bufnr = args.buf })
+	end,
+})
 
 -- helper function for indentation based on filetype
 local function setIndentation(filetype, indent_size)
