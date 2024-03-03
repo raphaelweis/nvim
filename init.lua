@@ -282,8 +282,8 @@ vim.keymap.set("n", "<leader>fc", builtin.commands, { desc = "Search vim command
 vim.g.mkdp_page_title = "${name}"
 vim.keymap.set("n", "<leader>mp", "<CMD>MarkdownPreview<CR>", { desc = "Open a preview of the current markdown file" })
 
--- Vimtex Configuration
-vim.g.vimtex_view_method = "zathura"
+-- Vimtex configuration
+vim.g.vimtex_view_method = "sioyek"
 
 -- Autocmds
 vim.api.nvim_create_autocmd("BufWritePre", {
