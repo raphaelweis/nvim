@@ -44,6 +44,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Plugin list
 local plugins = {
 	"tpope/vim-surround",
+	"tpope/vim-repeat",
 	"tpope/vim-fugitive",
 	"nvim-lua/plenary.nvim",
 	{ "ThePrimeagen/harpoon", branch = "harpoon2" },
@@ -71,6 +72,7 @@ local plugins = {
 	"saadparwaiz1/cmp_luasnip",
 	"stevearc/conform.nvim",
 	"lervag/vimtex",
+	"windwp/nvim-ts-autotag",
 }
 require("lazy").setup(plugins, {})
 
@@ -136,6 +138,7 @@ require("nvim-treesitter.configs").setup({
 	},
 	auto_install = true,
 	highlight = { enable = true, disable = { "latex" } },
+	autotag = { enable = true },
 })
 
 -- Cmp configuration
@@ -304,5 +307,6 @@ local function setIndentation(filetype, indent_size)
 	})
 end
 setIndentation("html", 2)
+setIndentation("css", 2)
 setIndentation("yml", 2)
 setIndentation("markdown", 2)
