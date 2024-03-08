@@ -59,7 +59,7 @@ local plugins = {
 		end,
 	},
 	{ "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
-	{ "folke/neodev.nvim", opts = {} },
+	{ "folke/neodev.nvim", opts = { lspconfig = false } },
 	"rafamadriz/friendly-snippets",
 	"neovim/nvim-lspconfig",
 	"williamboman/mason.nvim",
@@ -240,7 +240,19 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-local servers = {} -- set custom settings for some servers (otherwise go with the defaults).
+local servers = {
+	lua_ls = {
+		settings = {
+			Lua = {
+				runtime = { version = "LuaJIT" },
+				workspace = {
+					-- 	checkThirdParty = false,
+					library = { vim.env.VIMRUNTIME, "${3rd}/luv/library", "${3rd}/busted/library" },
+				},
+			},
+		},
+	},
+} -- set custom settings for some servers (otherwise go with the defaults).
 require("mason").setup()
 require("mason-tool-installer").setup({})
 require("mason-lspconfig").setup({
