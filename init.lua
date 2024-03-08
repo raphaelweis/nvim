@@ -59,6 +59,7 @@ local plugins = {
 		end,
 	},
 	{ "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
+	{ "folke/neodev.nvim", opts = {} },
 	"rafamadriz/friendly-snippets",
 	"neovim/nvim-lspconfig",
 	"williamboman/mason.nvim",
@@ -83,7 +84,7 @@ vim.keymap.set("n", "<leader>gb", "<CMD>Gitsigns toggle_current_line_blame<CR>")
 -- Harpoon configuration
 local harpoon = require("harpoon")
 
-harpoon:setup()
+harpoon:setup({})
 
 vim.keymap.set("n", "<leader>a", function()
 	harpoon:list():append()
@@ -126,6 +127,9 @@ require("conform").setup({
 
 -- Treesitter configuration
 require("nvim-treesitter.configs").setup({
+	modules = {},
+	sync_install = false,
+	ignore_install = {},
 	ensure_installed = {
 		"c",
 		"lua",
@@ -236,19 +240,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-local servers = {
-	lua_ls = {
-		settings = {
-			Lua = {
-				runtime = { version = "LuaJIT" },
-				workspace = {
-					checkThirdParty = false,
-					library = { vim.env.VIMRUNTIME, "${3rd}/luv/library", "${3rd}/busted/library" },
-				},
-			},
-		},
-	},
-}
+local servers = {} -- set custom settings for some servers (otherwise go with the defaults).
 require("mason").setup()
 require("mason-tool-installer").setup({})
 require("mason-lspconfig").setup({
