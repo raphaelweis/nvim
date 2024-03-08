@@ -46,6 +46,7 @@ local plugins = {
 	"tpope/vim-repeat",
 	"tpope/vim-fugitive",
 	"nvim-lua/plenary.nvim",
+	{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true, opts = {} },
 	{ "ThePrimeagen/harpoon", branch = "harpoon2" },
 	{ "numToStr/Comment.nvim", opts = {} },
 	{ "lewis6991/gitsigns.nvim", opts = {} },
@@ -75,6 +76,9 @@ local plugins = {
 	"windwp/nvim-ts-autotag",
 }
 require("lazy").setup(plugins, {})
+
+-- colorscheme setup
+vim.cmd("colorscheme gruvbox")
 
 -- Fugitive and gitsigns configuration
 vim.keymap.set("n", "<leader>;", "<CMD>Git<CR>", { desc = "Open Fugitive recap window" })
