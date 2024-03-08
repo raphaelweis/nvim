@@ -46,7 +46,7 @@ local plugins = {
 	"tpope/vim-repeat",
 	"tpope/vim-fugitive",
 	"nvim-lua/plenary.nvim",
-	{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true, opts = {} },
+	{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true, opts = { italic = { strings = false } } },
 	{ "ThePrimeagen/harpoon", branch = "harpoon2" },
 	{ "numToStr/Comment.nvim", opts = {} },
 	{ "lewis6991/gitsigns.nvim", opts = {} },
