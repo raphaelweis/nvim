@@ -10,8 +10,6 @@ vim.g.filetype_indent = true
 
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.shiftwidth = 4
-vim.opt.tabstop = 4
 vim.opt.termguicolors = true
 vim.opt.hlsearch = true
 vim.opt.signcolumn = "yes"
@@ -43,6 +41,7 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Plugin list
 local plugins = {
+	"tpope/vim-sleuth",
 	"tpope/vim-surround",
 	"tpope/vim-repeat",
 	"tpope/vim-fugitive",
@@ -295,18 +294,3 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		require("conform").format({ bufnr = args.buf })
 	end,
 })
-
--- helper function for indentation based on filetype
-local function setIndentation(filetype, indent_size)
-	vim.api.nvim_create_autocmd("FileType", {
-		callback = function()
-			vim.bo.shiftwidth = indent_size
-			vim.bo.tabstop = indent_size
-		end,
-		pattern = filetype,
-	})
-end
-setIndentation("html", 2)
-setIndentation("css", 2)
-setIndentation("yml", 2)
-setIndentation("markdown", 2)
