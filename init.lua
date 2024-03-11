@@ -47,6 +47,16 @@ local plugins = {
 	"tpope/vim-fugitive",
 	"nvim-lua/plenary.nvim",
 	{ "sainnhe/gruvbox-material", priority = 1000 },
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {
+			options = {
+				component_separators = { left = "|", right = "|" },
+				section_separators = "",
+			},
+		},
+	},
 	{ "ThePrimeagen/harpoon", branch = "harpoon2" },
 	{ "numToStr/Comment.nvim", opts = {} },
 	{ "lewis6991/gitsigns.nvim", opts = {} },
