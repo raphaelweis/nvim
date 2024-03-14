@@ -17,6 +17,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.colorcolumn = "80"
 vim.opt.undofile = true
+vim.opt.textwidth = 80
 vim.opt.clipboard:append("unnamedplus")
 
 vim.keymap.set("n", "<Esc>", "<CMD>noh<CR>", { desc = "Dismiss search highlight" })
