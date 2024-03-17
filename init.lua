@@ -100,7 +100,7 @@ local plugins = {
 		},
 	},
 	{ "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
-	{ "folke/neodev.nvim", opts = { lspconfig = false } },
+	{ "folke/neodev.nvim", opts = {} },
 	"rafamadriz/friendly-snippets",
 	"neovim/nvim-lspconfig",
 	"williamboman/mason.nvim",
