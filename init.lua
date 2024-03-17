@@ -70,6 +70,33 @@ local plugins = {
 			vim.fn["mkdp#util#install"]()
 		end,
 	},
+	{
+		"epwalsh/obsidian.nvim",
+		lazy = true,
+		event = {
+			"BufReadPre G:\\My Drive\\A\\**.md", -- Windows vault.
+		},
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"hrsh7th/nvim-cmp",
+			"nvim-telescope/telescope.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		opts = {
+			workspaces = { { name = "A", path = "G:\\My Drive\\A" } },
+			completion = { nvim_cmp = true, min_chars = 2 },
+			preferred_link_style = "wiki",
+			open_app_foreground = false,
+			picker = { name = "telescope.nvim" },
+			attachments = {
+				img_folder = "assets/imgs", -- This is the default
+				img_text_func = function(client, path)
+					path = client:vault_relative_path(path) or path
+					return string.format("![%s](%s)", path.name, path)
+				end,
+			},
+		},
+	},
 	{ "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
 	{ "folke/neodev.nvim", opts = { lspconfig = false } },
 	"rafamadriz/friendly-snippets",
