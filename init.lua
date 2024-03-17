@@ -74,7 +74,7 @@ local plugins = {
 		"epwalsh/obsidian.nvim",
 		lazy = true,
 		event = {
-			"BufReadPre G:\\My Drive\\A\\**.md", -- Windows vault.
+			"BufReadPre G:/My Drive/A/**.md", -- Windows vault.
 		},
 		dependencies = {
 			"nvim-lua/plenary.nvim",
@@ -83,7 +83,7 @@ local plugins = {
 			"nvim-treesitter/nvim-treesitter",
 		},
 		opts = {
-			workspaces = { { name = "A", path = "G:\\My Drive\\A" } },
+			workspaces = { { name = "A", path = "G:/My Drive/A" } },
 			completion = { nvim_cmp = true, min_chars = 2 },
 			preferred_link_style = "wiki",
 			open_app_foreground = false,
