@@ -171,7 +171,7 @@ require("conform").setup({
 		tex = { "latexindent" },
 		html = { "prettier" },
 		css = { "prettier" },
-		json = { "jq" },
+		json = { "prettier" },
 		yaml = { "prettier" },
 		markdown = { "prettier" },
 	},
