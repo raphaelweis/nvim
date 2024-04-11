@@ -49,7 +49,7 @@ local plugins = {
 	"tpope/vim-repeat",
 	"tpope/vim-fugitive",
 	"nvim-lua/plenary.nvim",
-	{ "sainnhe/gruvbox-material", priority = 1000 },
+	{ "folke/tokyonight.nvim", lazy = false, priority = 1000, opts = {} },
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -118,8 +118,7 @@ local plugins = {
 require("lazy").setup(plugins, {})
 
 -- colorscheme setup
-vim.g.gruvbox_material_foreground = "original"
-vim.cmd("colorscheme gruvbox-material")
+vim.cmd("colorscheme tokyonight-night")
 
 -- Fugitive and gitsigns configuration
 vim.keymap.set("n", "<leader>;", "<CMD>Git<CR>", { desc = "Open Fugitive recap window" })
