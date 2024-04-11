@@ -11,7 +11,7 @@ vim.g.filetype_indent = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.tabstop = 4
-vim.opt.conceallevel = 1
+vim.opt.shiftwidth = 4
 vim.opt.termguicolors = true
 vim.opt.hlsearch = true
 vim.opt.signcolumn = "yes"
@@ -20,6 +20,7 @@ vim.opt.smartcase = true
 vim.opt.colorcolumn = "80"
 vim.opt.undofile = true
 vim.opt.textwidth = 80
+vim.opt.exrc = true
 vim.opt.clipboard:append("unnamedplus")
 
 vim.keymap.set("n", "<Esc>", "<CMD>noh<CR>", { desc = "Dismiss search highlight" })
@@ -44,7 +45,6 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Plugin list
 local plugins = {
-	"tpope/vim-sleuth",
 	"tpope/vim-surround",
 	"tpope/vim-repeat",
 	"tpope/vim-fugitive",
@@ -81,6 +81,7 @@ local plugins = {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"hrsh7th/nvim-cmp",
+
 			"nvim-telescope/telescope.nvim",
 			"nvim-treesitter/nvim-treesitter",
 		},
@@ -154,7 +155,14 @@ end, { desc = "Go to harpoon file (4)" })
 require("luasnip.loaders.from_vscode").lazy_load()
 
 -- Formatter configuration
+vim.g.disable_autoformat = false
 require("conform").setup({
+	format_on_save = function()
+		if vim.g.disable_autoformat then
+			return
+		end
+		return { timeout_ms = 500, lsp_fallback = true }
+	end,
 	formatters_by_ft = {
 		lua = { "stylua" },
 		c = { "clang_format" },
@@ -336,9 +344,10 @@ vim.keymap.set("n", "<leader>mp", "<CMD>MarkdownPreview<CR>", { desc = "Open a p
 vim.g.vimtex_view_method = "sioyek"
 
 -- Autocmds
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*",
-	callback = function(args)
-		require("conform").format({ bufnr = args.buf })
-	end,
+vim.api.nvim_create_user_command("FormatToggle", function()
+	vim.g.disable_autoformat = not vim.g.disable_autoformat
+	print("Format on save is set to " .. tostring(vim.g.disable_autoformat))
+end, {
+	desc = "Toggle autoformat-on-save",
 })
+vim.keymap.set("n", "<leader>ft", "<CMD>FormatToggle<CR>", { desc = "Toggle format on save" })
